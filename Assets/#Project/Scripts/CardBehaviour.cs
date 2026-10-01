@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 [RequireComponent(typeof(Animator))]
 
@@ -10,6 +11,10 @@ public class CardBehaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer renderer;
     public bool IsFaceUp{get; private set;} // fonction en lecture seule
     #pragma warning restore CS0108 // enable the warning again. 
+
+    [SerializeField] private LevelManager manager; // ??
+    [SerializeField] private int id; // ??
+
 
     private Animator animator;
     void Start()
@@ -64,8 +69,14 @@ public class CardBehaviour : MonoBehaviour
     private void FaceDown()
     {
         renderer.sprite = spriteFaceDown;
+
     }
 
-
+    public void ConnectToManager(LevelManager manager, int id)
+    {
+        this.manager = manager;
+        this.id = id;
+        
+    }
 
 }
