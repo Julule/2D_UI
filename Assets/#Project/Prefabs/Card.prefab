@@ -159,7 +159,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 885312014, guid: 845ed9fe2221edc4fb5195eb67c057c5, type: 3}
+  m_Sprite: {fileID: -607366374245702973, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -238,6 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0c580d82fda1c47bd18988f7414571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardBehaviour
-  spriteFaceDown: {fileID: 885312014, guid: 845ed9fe2221edc4fb5195eb67c057c5, type: 3}
-  spriteFaceUp: {fileID: 5189691121816951081, guid: 845ed9fe2221edc4fb5195eb67c057c5, type: 3}
+  spriteFaceDown: {fileID: -607366374245702973, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  spriteFaceUp: {fileID: 803226105, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   renderer: {fileID: 0}
