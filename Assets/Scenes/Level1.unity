@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouseManager
   inputActions: {fileID: -944628639613478452, guid: 62f497660b1ea254ba9702ca240b6e23, type: 3}
+  levelManager: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

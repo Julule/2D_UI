@@ -10,8 +10,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private CardBehaviour prefab;
     [SerializeField] private Vector2 offset = Vector2.one * 0.2f;
     private List<CardBehaviour> cardBehaviours = new();
-    private int cardFocused = -1; // attribut
-    private CardBehaviour CardFocused => cardFocused >= 0 ? cardBehaviours[cardFocused] : null; // propriété
+    private int cardFocusedId = -1; // attribut
+    private CardBehaviour CardFocused => cardFocusedId >= 0 ? cardBehaviours[cardFocusedId] : null; // propriété équiv à la carte focused si elle est pas nulle
 
     private void Start(){
         if(cardNumber % 2 != 0) 
@@ -57,8 +57,23 @@ public class LevelManager : MonoBehaviour
    
     public void MouseOverCard(CardBehaviour cardBehaviour)
     {
-        
+        if(cardBehaviour == null)
+        {
+            if(cardFocusedId != -1)
+            {
+                CardFocused.Unfocus();
+                cardFocusedId = -1;
+            } 
+                
+        }
+        else if(cardBehaviour.Id != cardFocusedId)
+        {
+            if (CardFocused != null)
+            {
+                CardFocused.Unfocus();
+            }
+            cardFocusedId = cardBehaviour.Id;
+            cardBehaviour.Focus();
+        }
     }
-
-
 }

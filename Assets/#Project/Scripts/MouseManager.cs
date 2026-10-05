@@ -46,9 +46,11 @@ public class MouseManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.name);
+            // Debug.Log(hit.collider.name);
             CardBehaviour cardBehaviour = hit.collider.GetComponentInParent<CardBehaviour>();
-            Debug.Log("cardBehavior, cardbehavior.gameobject");
+            levelManager.MouseOverCard(cardBehaviour); // trigger la méthode MouseOverCard avec la carte concernée en paramêtre.
+            // Debug.Log("cardBehavior, cardbehavior.gameobject");
         }
+
     }
 }
