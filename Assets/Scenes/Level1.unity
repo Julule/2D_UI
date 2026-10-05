@@ -300,7 +300,7 @@ MonoBehaviour:
   - {fileID: -123847474, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   - {fileID: -750205967, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   - {fileID: 1428771851, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
-  timeBeforeFaceDown: 0
+  timeBeforeFaceDown: 2
 --- !u!4 &1395126425
 Transform:
   m_ObjectHideFlags: 0
