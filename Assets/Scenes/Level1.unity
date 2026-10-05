@@ -286,8 +286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe1bb192b238394a9ecdc586554c513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  cardNumber: 6
-  cardsByLine: 5
+  cardNumber: 16
+  cardsByLine: 4
   prefab: {fileID: 4212058847813748208, guid: ec4c540519d8a3849aa527cbaa1b8518, type: 3}
   offset: {x: 0.2, y: 0.2}
   spriteFaceUp:
@@ -300,6 +300,7 @@ MonoBehaviour:
   - {fileID: -123847474, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   - {fileID: -750205967, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   - {fileID: 1428771851, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  timeBeforeFaceDown: 0
 --- !u!4 &1395126425
 Transform:
   m_ObjectHideFlags: 0

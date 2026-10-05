@@ -26,6 +26,7 @@ public class MouseManager : MonoBehaviour
                 Debug.LogError("Mouse manager needs à Level manager");
             }
         }
+        levelManager.ConnectMouseManager(this);
     }
 
     void OnEnable()
@@ -36,7 +37,6 @@ public class MouseManager : MonoBehaviour
     {
         inputActions.FindActionMap(ACTION_MAP).Disable();
     }
-
 
     void Update()
     {

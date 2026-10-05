@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour
 {
@@ -10,10 +12,17 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private CardBehaviour prefab;
     [SerializeField] private Vector2 offset = Vector2.one * 0.2f;
     private List<CardBehaviour> cardBehaviours = new();
+    private int firstCardFaceUpId = -1;
+    private int secondCardFaceUpId = -1;
     private int cardFocusedId = -1; // attribut
     private CardBehaviour CardFocused => cardFocusedId >= 0 ? cardBehaviours[cardFocusedId] : null; // propriété équiv à la carte focused si elle est pas nulle
-
+    private CardBehaviour FirstCardFaceUp => firstCardFaceUpId >= 0 ? cardBehaviours[firstCardFaceUpId] : null; // renvoie la première carte, si elle existe pas alors : 
+    private CardBehaviour SecondCardFaceUp => secondCardFaceUpId >= 0 ? cardBehaviours[secondCardFaceUpId] : null;
     [SerializeField] private Sprite[] spriteFaceUp;
+    [SerializeField] private float timeBeforeFaceDown;
+
+    public MouseManager MouseManager {get; private set;}
+    
     private void Start(){
         if(cardNumber % 2 != 0) 
         {
@@ -22,6 +31,11 @@ public class LevelManager : MonoBehaviour
         }
 
         InstantiateCards();
+    }
+
+    public void ConnectMouseManager(MouseManager mouseManager)
+    {
+        MouseManager = mouseManager;
     }
 
     private void InstantiateCards()
@@ -96,9 +110,37 @@ public class LevelManager : MonoBehaviour
     public void MouseClick()
     {
         if(CardFocused != null)
-        {   print(CardFocused.Id);
+        {
             CardFocused.TurnFaceUP();
+            if (FirstCardFaceUp == null)
+            {
+                firstCardFaceUpId = cardFocusedId;
+            }
+            else
+            {
+                secondCardFaceUpId = cardFocusedId;
+                StartCoroutine(CheckResult());
+            }
+            CardFocused.Unfocus();
+            cardFocusedId = -1;
         }
     }
 
+    private IEnumerator CheckResult()
+    {
+        MouseManager.enabled = false;
+
+        yield return new WaitForSeconds(timeBeforeFaceDown); // retourne, puis attend une seconde, puis tu continue àpd d'ici. 
+
+        if (FirstCardFaceUp.FaceId != SecondCardFaceUp.FaceId)
+        {
+            FirstCardFaceUp.TurnFaceDOWN();
+            SecondCardFaceUp.TurnFaceDOWN();
+        }
+
+        firstCardFaceUpId = -1;
+        secondCardFaceUpId = -1;
+
+        MouseManager.enabled = true;
+    }
 }
