@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
     private int cardFocusedId = -1; // attribut
     private CardBehaviour CardFocused => cardFocusedId >= 0 ? cardBehaviours[cardFocusedId] : null; // propriété équiv à la carte focused si elle est pas nulle
 
+    [SerializeField] private Sprite[] spriteFaceUp;
     private void Start(){
         if(cardNumber % 2 != 0) 
         {
@@ -25,10 +26,19 @@ public class LevelManager : MonoBehaviour
 
     private void InstantiateCards()
     {
+        // lister les faces possibles
+        List<int> facesPoolIndex = new();
+        for(int index=0; index < cardNumber/2; index++)
+        {
+            facesPoolIndex.Add(index);
+            facesPoolIndex.Add(index);
+        }
 
         BoxCollider2D collider = prefab.GetComponentInChildren<BoxCollider2D>();
         float width = collider.size.x;
         float height = collider.size.y;
+
+
 
         int lines = cardNumber / cardsByLine;
         if(cardNumber % cardsByLine != 0) lines++;
@@ -46,6 +56,12 @@ public class LevelManager : MonoBehaviour
                 position += x * (width + offset.x) * Vector2.right;
                 CardBehaviour cardBehaviour = Instantiate(prefab, position, Quaternion.identity);
 
+                // choper une face
+                int rndIndex = Random.Range(0, facesPoolIndex.Count);
+                int faceIndex = facesPoolIndex[rndIndex];
+                cardBehaviour.SetFace(spriteFaceUp[faceIndex], faceIndex);
+                facesPoolIndex.RemoveAt(rndIndex);
+
                 cardBehaviour.ConnectToManager(this, cardBehaviours.Count);
 
                 cardBehaviours.Add(cardBehaviour);
@@ -59,7 +75,7 @@ public class LevelManager : MonoBehaviour
     {
         if(cardBehaviour == null)
         {
-            if(cardFocusedId != -1)
+            if(cardFocusedId != -1) // -1 : la seule valeur qui ne correspond a aucun indice pour toujours
             {
                 CardFocused.Unfocus();
                 cardFocusedId = -1;
@@ -76,4 +92,13 @@ public class LevelManager : MonoBehaviour
             cardBehaviour.Focus();
         }
     }
+
+    public void MouseClick()
+    {
+        if(CardFocused != null)
+        {   print(CardFocused.Id);
+            CardFocused.TurnFaceUP();
+        }
+    }
+
 }

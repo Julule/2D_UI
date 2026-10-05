@@ -14,10 +14,9 @@ public class CardBehaviour : MonoBehaviour
     public bool IsFocused{get; private set;} = false;
     #pragma warning restore CS0108 // enable the warning again. 
 
-    [SerializeField] private LevelManager manager; // ??
-     public int Id {get; private set;} // ??
-
-
+    [SerializeField] private LevelManager manager; 
+    public int Id {get; private set;} 
+    public int FaceId {get; private set;} 
     private Animator animator;
     void Start()
     {
@@ -42,46 +41,28 @@ public class CardBehaviour : MonoBehaviour
             renderer.sprite = spriteFaceDown;
         }
     }
-
-    void Update()
-    {
-        TurnFaceUP();
-        TurnFaceDOWN();
-    }
-
     public void Turn(bool isFaceUp)
     {
         animator.SetBool(FACEUP_ANIMATION, isFaceUp); // change le paramêtre de l'animateur en true 
         IsFaceUp = isFaceUp;
     }
-
     private void SetFocus(bool isFocused)
     {
         IsFocused = isFocused;
         animator.SetBool(MOUSE_OVER_ANIMATION, isFocused);
     }
-
     public void Focus() => SetFocus (true);
-
     public void Unfocus() => SetFocus (false);
-
-
     public void TurnFaceUP() => Turn(true);
     public void TurnFaceDOWN() => Turn(false);
-    // {
-    //     animator.SetBool(FACEUP_ANIMATION, false); // change le paramêtre de l'animateur en false
-    //     IsFaceUp = false;
-    // }
 
     private void FaceUp()
     {
         renderer.sprite = spriteFaceUp;
     }
-
     private void FaceDown()
     {
         renderer.sprite = spriteFaceDown;
-
     }
 
     public void ConnectToManager(LevelManager manager, int id)
@@ -90,4 +71,9 @@ public class CardBehaviour : MonoBehaviour
         Id = id;
     }
 
+    public void SetFace(Sprite faceUp, int faceId)
+    {
+        spriteFaceUp = faceUp;
+        FaceId = faceId;
+    }
 }

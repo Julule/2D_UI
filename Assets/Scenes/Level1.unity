@@ -290,6 +290,16 @@ MonoBehaviour:
   cardsByLine: 5
   prefab: {fileID: 4212058847813748208, guid: ec4c540519d8a3849aa527cbaa1b8518, type: 3}
   offset: {x: 0.2, y: 0.2}
+  spriteFaceUp:
+  - {fileID: 803226105, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: 1937306487, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: 6373548, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: 747360192, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: 920305721, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: -415584043, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: -123847474, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: -750205967, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
+  - {fileID: 1428771851, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
 --- !u!4 &1395126425
 Transform:
   m_ObjectHideFlags: 0

@@ -8,10 +8,16 @@ public class MouseManager : MonoBehaviour
 
     private const string ACTION_MAP = "Game";
     private const string ACTION_MOUSE_POSITION = "Mouse Position";
+    private const string ACTION_MOUSE_CLICK = "Mouse Click";
+    InputAction mouseClick;
     InputAction mousePosition;
     [SerializeField] private LevelManager levelManager;
     void Awake(){
         mousePosition = inputActions.FindActionMap(ACTION_MAP).FindAction(ACTION_MOUSE_POSITION);
+        mouseClick = inputActions.FindActionMap(ACTION_MAP).FindAction(ACTION_MOUSE_CLICK);
+
+        mouseClick.performed += ctx => OnMouseClick(ctx);
+
         if(levelManager == null)
         {
             levelManager = GetComponent<LevelManager>();
@@ -34,7 +40,7 @@ public class MouseManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"Souris position {mousePosition.ReadValue<Vector2>()}"); // Mouse track
+        //Debug.Log($"Souris position {mousePosition.ReadValue<Vector2>()}"); // Mouse track
         CheckMouseOver();
     }
 
@@ -46,11 +52,15 @@ public class MouseManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            // Debug.Log(hit.collider.name);
             CardBehaviour cardBehaviour = hit.collider.GetComponentInParent<CardBehaviour>();
             levelManager.MouseOverCard(cardBehaviour); // trigger la méthode MouseOverCard avec la carte concernée en paramêtre.
-            // Debug.Log("cardBehavior, cardbehavior.gameobject");
+        
         }
-
     }
+
+    private void OnMouseClick(InputAction.CallbackContext ctx)
+    {
+        levelManager.MouseClick();
+    }
+
 }
