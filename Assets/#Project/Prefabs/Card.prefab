@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 6879601733026232060}
   - component: {fileID: 403655623191473401}
   - component: {fileID: 4212058847813748208}
+  - component: {fileID: 3212490672938886080}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -241,3 +242,32 @@ MonoBehaviour:
   spriteFaceDown: {fileID: -607366374245702973, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   spriteFaceUp: {fileID: 803226105, guid: a64eca9c7d1fe3d44ad36eb46fa3d7cd, type: 3}
   renderer: {fileID: 0}
+  manager: {fileID: 0}
+  id: 0
+--- !u!50 &3212490672938886080
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7064741644421430974}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

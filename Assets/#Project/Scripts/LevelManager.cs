@@ -7,11 +7,11 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] [Range(2, 24)] private int cardNumber = 6;
     [SerializeField] private int cardsByLine = 4;
-
     [SerializeField] private CardBehaviour prefab;
     [SerializeField] private Vector2 offset = Vector2.one * 0.2f;
-
     private List<CardBehaviour> cardBehaviours = new();
+    private int cardFocused = -1; // attribut
+    private CardBehaviour CardFocused => cardFocused >= 0 ? cardBehaviours[cardFocused] : null; // propriété
 
     private void Start(){
         if(cardNumber % 2 != 0) 
@@ -52,5 +52,13 @@ public class LevelManager : MonoBehaviour
                 if(cardBehaviours.Count >= cardNumber) return;
             }
         }
+ 
+   }
+   
+    public void MouseOverCard(CardBehaviour cardBehaviour)
+    {
+        
     }
+
+
 }

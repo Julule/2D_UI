@@ -266,6 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1395126425}
   - component: {fileID: 1395126424}
+  - component: {fileID: 1395126426}
   m_Layer: 0
   m_Name: Level Manager
   m_TagString: Untagged
@@ -304,6 +305,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1395126426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395126423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77464a5f58ca7a4f97f06c2927d7ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MouseManager
+  inputActions: {fileID: -944628639613478452, guid: 62f497660b1ea254ba9702ca240b6e23, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
