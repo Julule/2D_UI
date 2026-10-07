@@ -4,11 +4,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 // using NUnit.Framework;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] [Range(2, 24)] private int cardNumber = 6;
+    private int cardNumber;
     [SerializeField] private int cardsByLine = 4;
     [SerializeField] private CardBehaviour prefab;
     [SerializeField] private Vector2 offset = Vector2.one * 0.2f;
@@ -27,6 +28,8 @@ public class LevelManager : MonoBehaviour
 
     private List<int> faceIdAlreadyFaceUp = new();
     private float timeBeforeVictoryDisplay = 1f;
+    private float timeAfterVictoryDisplay = 2f;
+
 
     private void Start(){
         if(cardNumber % 2 != 0) 
@@ -34,7 +37,31 @@ public class LevelManager : MonoBehaviour
             cardNumber += 1;
             Debug.LogError("Card number needs to be an even number");
         }
+    }
 
+    public void SetCardsNumber(int n)
+    {
+        if(cardNumber % 2 != 0) 
+        {
+            cardNumber += 1;
+            Debug.LogError("Card number needs to be an even number");
+        }
+        cardNumber = n;
+        InstantiateCards();
+        
+
+    }
+
+    public void Start14Cards()
+    {
+        cardNumber = 14;
+        InstantiateCards();
+    }
+
+   public void Start16Cards()
+    {
+        cardNumber = 16;
+        InstantiateCards();
     }
 
     public void ConnectMouseManager(MouseManager mouseManager)
@@ -46,8 +73,11 @@ public class LevelManager : MonoBehaviour
     {
         // lister les faces possibles
         List<int> facesPoolIndex = new();
-        for(int index=0; index < cardNumber/2; index++)
+        for(int n=0; n< cardNumber/2; n++)
         {
+            int index = Random.Range(0, spriteFaceUp.Length);
+            while(facesPoolIndex.Contains(index))
+                index = Random.Range(0, spriteFaceUp.Length);
             facesPoolIndex.Add(index);
             facesPoolIndex.Add(index);
         }
@@ -55,8 +85,6 @@ public class LevelManager : MonoBehaviour
         BoxCollider2D collider = prefab.GetComponentInChildren<BoxCollider2D>();
         float width = collider.size.x;
         float height = collider.size.y;
-
-
 
         int lines = cardNumber / cardsByLine;
         if(cardNumber % cardsByLine != 0) lines++;
@@ -88,6 +116,35 @@ public class LevelManager : MonoBehaviour
         }
  
    }
+
+   public void ResetGame()
+    {
+    
+        List<int> facesPoolIndex = new();
+        for(int n=0; n< cardNumber/2; n++)
+        {
+            int index = Random.Range(0, spriteFaceUp.Length);
+            while(facesPoolIndex.Contains(index))
+                index = Random.Range(0, spriteFaceUp.Length);
+            facesPoolIndex.Add(index);
+            facesPoolIndex.Add(index);
+        }
+
+        foreach (CardBehaviour cardBehaviour in cardBehaviours)
+        {
+            int rndIndex = Random.Range(0, facesPoolIndex.Count);
+            int faceIndex = facesPoolIndex[rndIndex];
+            cardBehaviour.SetFace(spriteFaceUp[faceIndex], faceIndex);
+            facesPoolIndex.RemoveAt(rndIndex);
+        }
+
+        foreach(GameObject go in gameObjectActivateOnVictory)
+        {
+            go.SetActive(false);
+        }
+
+        faceIdAlreadyFaceUp.Clear();
+    }
    
     public void MouseOverCard(CardBehaviour cardBehaviour)
     {
@@ -138,12 +195,16 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeVictoryDisplay);
 
+        foreach (CardBehaviour cardBehaviour in cardBehaviours)
+        {
+            cardBehaviour.TurnFaceDOWN();
+        }
+
         foreach(GameObject go in gameObjectActivateOnVictory)
         {
             go.SetActive(true);
         }
     }
-
     private IEnumerator CheckResult()
     {
         MouseManager.enabled = false;
