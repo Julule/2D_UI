@@ -16,10 +16,11 @@ public class LevelManager : MonoBehaviour
     private int secondCardFaceUpId = -1;
     private int cardFocusedId = -1; // attribut
     private CardBehaviour CardFocused => cardFocusedId >= 0 ? cardBehaviours[cardFocusedId] : null; // propriété équiv à la carte focused si elle est pas nulle
-    private CardBehaviour FirstCardFaceUp => firstCardFaceUpId >= 0 ? cardBehaviours[firstCardFaceUpId] : null; // renvoie la première carte, si elle existe pas alors : 
-    private CardBehaviour SecondCardFaceUp => secondCardFaceUpId >= 0 ? cardBehaviours[secondCardFaceUpId] : null;
+    private CardBehaviour FirstCardFaceUp => firstCardFaceUpId >= 0 ? cardBehaviours[firstCardFaceUpId] : null; // renvoie la première carte, si elle existe pas alors : rien.
+    private CardBehaviour SecondCardFaceUp => secondCardFaceUpId >= 0 ? cardBehaviours[secondCardFaceUpId] : null; // renvoie la seconde carte, si elle existe pas alors : rien.
     [SerializeField] private Sprite[] spriteFaceUp;
     [SerializeField] private float timeBeforeFaceDown;
+    private int successCount = 0;
 
     public MouseManager MouseManager {get; private set;}
     
@@ -109,20 +110,20 @@ public class LevelManager : MonoBehaviour
 
     public void MouseClick()
     {
-        if(CardFocused != null)
+        if(CardFocused != null) // si une carte est focused
         {
-            CardFocused.TurnFaceUP();
-            if (FirstCardFaceUp == null)
+            CardFocused.TurnFaceUP(); // on la retourne
+            if (FirstCardFaceUp == null) // si y'a pas de première carte
             {
-                firstCardFaceUpId = cardFocusedId;
+                firstCardFaceUpId = cardFocusedId; // alors on la carte focus est la première carte
             }
             else
             {
-                secondCardFaceUpId = cardFocusedId;
-                StartCoroutine(CheckResult());
+                secondCardFaceUpId = cardFocusedId; // sinon c'est la deuxième carte qu'on stocke dans cardfocused
+                StartCoroutine(CheckResult()); // on vérifie le tout
             }
             CardFocused.Unfocus();
-            cardFocusedId = -1;
+            cardFocusedId = -1; // on défocus la carte en question
         }
     }
 
@@ -132,11 +133,18 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(timeBeforeFaceDown); // retourne, puis attend une seconde, puis tu continue àpd d'ici. 
 
-        if (FirstCardFaceUp.FaceId != SecondCardFaceUp.FaceId)
+        if (FirstCardFaceUp.FaceId != SecondCardFaceUp.FaceId) // si ce ne sont pas les mêmes. 
         {
             FirstCardFaceUp.TurnFaceDOWN();
             SecondCardFaceUp.TurnFaceDOWN();
         }
+
+        else if(FirstCardFaceUp.FaceId == SecondCardFaceUp.FaceId)
+        {
+            successCount++;
+        }
+
+        Debug.Log($"nombre de paires assorties : {successCount}");
 
         firstCardFaceUpId = -1;
         secondCardFaceUpId = -1;
