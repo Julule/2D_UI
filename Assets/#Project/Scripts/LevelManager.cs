@@ -20,9 +20,10 @@ public class LevelManager : MonoBehaviour
     private CardBehaviour SecondCardFaceUp => secondCardFaceUpId >= 0 ? cardBehaviours[secondCardFaceUpId] : null; // renvoie la seconde carte, si elle existe pas alors : rien.
     [SerializeField] private Sprite[] spriteFaceUp;
     [SerializeField] private float timeBeforeFaceDown;
-    private int successCount = 0;
-
     public MouseManager MouseManager {get; private set;}
+    private int successCount => faceIdAlreadyFaceUp.Count;
+
+    private List<int> faceIdAlreadyFaceUp = new();
     
     private void Start(){
         if(cardNumber % 2 != 0) 
@@ -97,14 +98,18 @@ public class LevelManager : MonoBehaviour
             } 
                 
         }
-        else if(cardBehaviour.Id != cardFocusedId)
+        else if(cardBehaviour.Id != cardFocusedId && cardBehaviour.Id != firstCardFaceUpId)
         {
             if (CardFocused != null)
             {
                 CardFocused.Unfocus();
             }
+
+            if (!faceIdAlreadyFaceUp.Contains(cardBehaviour.FaceId))
+            {
             cardFocusedId = cardBehaviour.Id;
             cardBehaviour.Focus();
+            }
         }
     }
 
@@ -141,7 +146,8 @@ public class LevelManager : MonoBehaviour
 
         else if(FirstCardFaceUp.FaceId == SecondCardFaceUp.FaceId)
         {
-            successCount++;
+            faceIdAlreadyFaceUp.Add(FirstCardFaceUp.FaceId);
+            //successCount++;
         }
 
         Debug.Log($"nombre de paires assorties : {successCount}");
