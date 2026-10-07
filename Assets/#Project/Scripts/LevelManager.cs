@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+// using NUnit.Framework;
 
 public class LevelManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int cardsByLine = 4;
     [SerializeField] private CardBehaviour prefab;
     [SerializeField] private Vector2 offset = Vector2.one * 0.2f;
+    [SerializeField] private GameObject[] gameObjectActivateOnVictory;
     private List<CardBehaviour> cardBehaviours = new();
     private int firstCardFaceUpId = -1;
     private int secondCardFaceUpId = -1;
@@ -24,7 +26,8 @@ public class LevelManager : MonoBehaviour
     private int successCount => faceIdAlreadyFaceUp.Count;
 
     private List<int> faceIdAlreadyFaceUp = new();
-    
+    private float timeBeforeVictoryDisplay = 1f;
+
     private void Start(){
         if(cardNumber % 2 != 0) 
         {
@@ -32,7 +35,6 @@ public class LevelManager : MonoBehaviour
             Debug.LogError("Card number needs to be an even number");
         }
 
-        InstantiateCards();
     }
 
     public void ConnectMouseManager(MouseManager mouseManager)
@@ -40,7 +42,7 @@ public class LevelManager : MonoBehaviour
         MouseManager = mouseManager;
     }
 
-    private void InstantiateCards()
+    public void InstantiateCards()
     {
         // lister les faces possibles
         List<int> facesPoolIndex = new();
@@ -132,6 +134,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private IEnumerator VictoryDisplay()
+    {
+        yield return new WaitForSeconds(timeBeforeVictoryDisplay);
+
+        foreach(GameObject go in gameObjectActivateOnVictory)
+        {
+            go.SetActive(true);
+        }
+    }
+
     private IEnumerator CheckResult()
     {
         MouseManager.enabled = false;
@@ -147,7 +159,10 @@ public class LevelManager : MonoBehaviour
         else if(FirstCardFaceUp.FaceId == SecondCardFaceUp.FaceId)
         {
             faceIdAlreadyFaceUp.Add(FirstCardFaceUp.FaceId);
-            //successCount++;
+            if(successCount >= cardNumber / 2)
+            {
+                StartCoroutine(VictoryDisplay());
+            }
         }
 
         Debug.Log($"nombre de paires assorties : {successCount}");
